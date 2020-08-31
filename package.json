@@ -7,7 +7,7 @@
   "author": "SpiritCroc",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SpiritCroc/riot-desktop"
+    "url": "https://github.com/SpiritCroc/element-desktop"
   },
   "license": "Apache-2.0",
   "files": [],
@@ -60,7 +60,7 @@
     "keytar": "^5.6.0"
   },
   "build": {
-    "appId": "im.riot.app",
+    "appId": "de.spiritcroc.schildidesktop",
     "electronVersion": "9.1.2",
     "files": [
       "package.json",
