@@ -78,7 +78,7 @@
       "webapp.asar"
     ],
     "linux": {
-      "target": "dir",
+      "target": "deb",
       "category": "Network;InstantMessaging;Chat",
       "maintainer": "schildichat-desktop@spiritcroc.de",
       "desktop": {
