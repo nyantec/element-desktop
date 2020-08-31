@@ -1,13 +1,13 @@
 {
-  "name": "element-desktop",
-  "productName": "Element",
+  "name": "schildichat-desktop",
+  "productName": "SchildiChat",
   "main": "src/electron-main.js",
   "version": "1.7.4",
   "description": "A feature-rich client for Matrix.org",
-  "author": "Element",
+  "author": "SpiritCroc",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vector-im/riot-desktop"
+    "url": "https://github.com/SpiritCroc/riot-desktop"
   },
   "license": "Apache-2.0",
   "files": [],
@@ -78,11 +78,11 @@
       "webapp.asar"
     ],
     "linux": {
-      "target": "deb",
+      "target": "dir",
       "category": "Network;InstantMessaging;Chat",
-      "maintainer": "support@element.io",
+      "maintainer": "schildichat-desktop@spiritcroc.de",
       "desktop": {
-        "StartupWMClass": "element"
+        "StartupWMClass": "schildichat"
       }
     },
     "mac": {
