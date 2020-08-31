@@ -210,7 +210,7 @@ async function main() {
     }
 
     let haveDeploy = false;
-    const expectedDeployDir = sc ? "webapp" : path.join(deployDir, path.basename(filename).replace(/\.tar\.gz/, ''));
+    const expectedDeployDir = sc ? "../element-web/webapp" : path.join(deployDir, path.basename(filename).replace(/\.tar\.gz/, ''));
     try {
         await fs.opendirSync(expectedDeployDir);
         console.log(expectedDeployDir + "already exists");
