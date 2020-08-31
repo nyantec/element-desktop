@@ -119,6 +119,7 @@ async function main() {
     let filename;
     let url;
     let setVersion = false;
+    let sc = true;
 
     while (process.argv.length > 2) {
         switch (process.argv[2]) {
@@ -147,7 +148,8 @@ async function main() {
         process.argv.shift();
     }
 
-    if (targetVersion === undefined) {
+    if (sc) {
+    } else if (targetVersion === undefined) {
         targetVersion = 'v' + riotDesktopPackageJson.version;
         filename = 'riot-' + targetVersion + '.tar.gz';
         url = PACKAGE_URL_PREFIX + targetVersion + '/' + filename;
@@ -208,12 +210,14 @@ async function main() {
     }
 
     let haveDeploy = false;
-    const expectedDeployDir = path.join(deployDir, path.basename(filename).replace(/\.tar\.gz/, ''));
+    const expectedDeployDir = sc ? "webapp" : path.join(deployDir, path.basename(filename).replace(/\.tar\.gz/, ''));
     try {
-        await fs.opendir(expectedDeployDir);
+        await fs.opendirSync(expectedDeployDir);
         console.log(expectedDeployDir + "already exists");
         haveDeploy = true;
     } catch (e) {
+        console.log("Not a valid webapp dir: " + expectedDeployDir, e);
+        return 1;
     }
 
     if (!haveDeploy) {
