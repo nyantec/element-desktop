@@ -1,3 +1,18 @@
+Changes in [1.7.5](https://github.com/vector-im/element-desktop/releases/tag/v1.7.5) (2020-09-01)
+=================================================================================================
+[Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.5-rc.1...v1.7.5)
+
+ * No changes since 1.7.5-rc.1
+
+Changes in [1.7.5-rc.1](https://github.com/vector-im/element-desktop/releases/tag/v1.7.5-rc.1) (2020-08-26)
+===========================================================================================================
+[Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.4...v1.7.5-rc.1)
+
+ * Settings v3: Update configs for new feature flag behaviour
+   [\#135](https://github.com/vector-im/element-desktop/pull/135)
+ * Add reaction preview labs flags to nightly
+   [\#134](https://github.com/vector-im/element-desktop/pull/134)
+
 Changes in [1.7.4](https://github.com/vector-im/element-desktop/releases/tag/v1.7.4) (2020-08-17)
 =================================================================================================
 [Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.4-rc.1...v1.7.4)
