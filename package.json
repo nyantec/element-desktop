@@ -2,7 +2,7 @@
   "name": "schildichat-desktop",
   "productName": "SchildiChat",
   "main": "src/electron-main.js",
-  "version": "1.7.5",
+  "version": "1.7.7",
   "description": "A feature-rich client for Matrix.org",
   "author": "SpiritCroc",
   "repository": {
