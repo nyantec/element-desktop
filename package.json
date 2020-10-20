@@ -27,6 +27,7 @@
     "build64deb": "electron-builder --x64 --linux deb",
     "build32windows": "electron-builder --ia32 --windows nsis",
     "build64windows": "electron-builder --x64 --windows nsis",
+    "build64windows-portable": "electron-builder --x64 --windows portable",
     "docker:setup": "docker build -t riot-desktop-dockerbuild dockerbuild",
     "docker:build:native": "scripts/in-docker.sh yarn run hak",
     "docker:build": "scripts/in-docker.sh yarn run build",
