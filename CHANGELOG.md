@@ -1,3 +1,51 @@
+Changes in [1.7.12](https://github.com/vector-im/element-desktop/releases/tag/v1.7.12) (2020-10-28)
+===================================================================================================
+[Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.11...v1.7.12)
+
+ * No changes since 1.7.11
+
+Changes in [1.7.11](https://github.com/vector-im/element-desktop/releases/tag/v1.7.11) (2020-10-26)
+===================================================================================================
+[Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.11-rc.1...v1.7.11)
+
+ * No changes since rc.1
+
+Changes in [1.7.11-rc.1](https://github.com/vector-im/element-desktop/releases/tag/v1.7.11-rc.1) (2020-10-21)
+=============================================================================================================
+[Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.10...v1.7.11-rc.1)
+
+ * Bump npm-user-validate from 1.0.0 to 1.0.1
+   [\#148](https://github.com/vector-im/element-desktop/pull/148)
+ * Use keytar for the seshat passphrase.
+   [\#147](https://github.com/vector-im/element-desktop/pull/147)
+ * Upgrade to Electron 10.1.3
+   [\#146](https://github.com/vector-im/element-desktop/pull/146)
+
+Changes in [1.7.10](https://github.com/vector-im/element-desktop/releases/tag/v1.7.10) (2020-10-20)
+===================================================================================================
+[Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.9...v1.7.10)
+
+ * No changes since 1.7.9
+
+Changes in [1.7.9](https://github.com/vector-im/element-desktop/releases/tag/v1.7.9) (2020-10-12)
+=================================================================================================
+[Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.9-rc.1...v1.7.9)
+
+ * No changes since rc.1
+
+Changes in [1.7.9-rc.1](https://github.com/vector-im/element-desktop/releases/tag/v1.7.9-rc.1) (2020-10-07)
+===========================================================================================================
+[Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.8...v1.7.9-rc.1)
+
+ * package.json: Bump the seshat version.
+   [\#145](https://github.com/vector-im/element-desktop/pull/145)
+ * Explicitly depend on `request` as webcontents-handler requires it
+   [\#144](https://github.com/vector-im/element-desktop/pull/144)
+ * Upgrade png-to-ico
+   [\#143](https://github.com/vector-im/element-desktop/pull/143)
+ * Point 'new issue' link at issue-type choice page
+   [\#142](https://github.com/vector-im/element-desktop/pull/142)
+
 Changes in [1.7.8](https://github.com/vector-im/element-desktop/releases/tag/v1.7.8) (2020-09-28)
 =================================================================================================
 [Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.8-rc.1...v1.7.8)
