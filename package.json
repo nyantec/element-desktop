@@ -3,11 +3,11 @@
   "productName": "SchildiChat",
   "main": "src/electron-main.js",
   "version": "1.7.14",
-  "description": "A feature-rich client for Matrix.org",
-  "author": "SpiritCroc",
+  "description": "A Matrix Client based on Element with a more traditional instant messaging experience",
+  "author": "SchildiChat",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SpiritCroc/element-desktop"
+    "url": "https://github.com/SchildiChat/element-desktop"
   },
   "license": "Apache-2.0",
   "files": [],
