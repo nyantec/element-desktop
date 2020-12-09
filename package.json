@@ -68,7 +68,7 @@
     "keytar": "^5.6.0"
   },
   "build": {
-    "appId": "de.spiritcroc.schildidesktop",
+    "appId": "chat.schildi.desktop",
     "electronVersion": "10.1.6",
     "files": [
       "package.json",
@@ -87,8 +87,8 @@
     ],
     "linux": {
       "target": "deb",
-      "category": "Network;InstantMessaging;Chat",
-      "maintainer": "schildichat-desktop@spiritcroc.de",
+      "category": "Network;InstantMessaging;Chat;VideoConference",
+      "maintainer": "codeworks@supercable.onl",
       "desktop": {
         "StartupWMClass": "schildichat"
       }
