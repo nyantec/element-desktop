@@ -2,7 +2,7 @@
   "name": "schildichat-desktop",
   "productName": "SchildiChat",
   "main": "src/electron-main.js",
-  "version": "1.7.14",
+  "version": "1.7.15",
   "description": "A Matrix Client based on Element with a more traditional instant messaging experience",
   "author": "SchildiChat",
   "repository": {
@@ -28,7 +28,7 @@
     "build32windows": "electron-builder --ia32 --windows nsis",
     "build64windows": "electron-builder --x64 --windows nsis",
     "build64windows-portable": "electron-builder --x64 --windows portable",
-    "docker:setup": "docker build -t riot-desktop-dockerbuild dockerbuild",
+    "docker:setup": "docker build -t element-desktop-dockerbuild dockerbuild",
     "docker:build:native": "scripts/in-docker.sh yarn run hak",
     "docker:build": "scripts/in-docker.sh yarn run build",
     "docker:install": "scripts/in-docker.sh yarn install",
@@ -69,7 +69,7 @@
   },
   "build": {
     "appId": "de.spiritcroc.schildidesktop",
-    "electronVersion": "10.1.3",
+    "electronVersion": "10.1.6",
     "files": [
       "package.json",
       {
