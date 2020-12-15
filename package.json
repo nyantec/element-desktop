@@ -25,6 +25,7 @@
     "build64linux": "electron-builder --x64 --linux deb pacman tar.xz",
     "build64pacman": "electron-builder --x64 --linux pacman",
     "build64deb": "electron-builder --x64 --linux deb",
+    "build64appimage": "electron-builder --x64 --linux AppImage",
     "build32windows": "electron-builder --ia32 --windows nsis",
     "build64windows": "electron-builder --x64 --windows nsis",
     "build64windows-portable": "electron-builder --x64 --windows portable",
