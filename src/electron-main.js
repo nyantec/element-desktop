@@ -99,12 +99,12 @@ if (argv["help"]) {
     app.exit();
 }
 
-// Electron creates the user data directory (with just an empty 'Dictionaries' directory...)
-// as soon as the app path is set, so pick a random path in it that must exist if it's a
-// real user data directory.
-function isRealUserDataDir(d) {
-    return fs.existsSync(path.join(d, 'IndexedDB'));
-}
+// // Electron creates the user data directory (with just an empty 'Dictionaries' directory...)
+// // as soon as the app path is set, so pick a random path in it that must exist if it's a
+// // real user data directory.
+// function isRealUserDataDir(d) {
+//     return fs.existsSync(path.join(d, 'IndexedDB'));
+// }
 
 // check if we are passed a profile in the SSO callback url
 let userDataPath;
@@ -119,21 +119,21 @@ if (userDataPathInProtocol) {
     if (argv['profile']) {
         newUserDataPath += '-' + argv['profile'];
     }
-    const newUserDataPathExists = isRealUserDataDir(newUserDataPath);
-    let oldUserDataPath = path.join(app.getPath('appData'), app.getName().replace('Element', 'Riot'));
-    if (argv['profile']) {
-        oldUserDataPath += '-' + argv['profile'];
-    }
+    // const newUserDataPathExists = isRealUserDataDir(newUserDataPath);
+    // let oldUserDataPath = path.join(app.getPath('appData'), app.getName().replace('Element', 'Riot'));
+    // if (argv['profile']) {
+    //     oldUserDataPath += '-' + argv['profile'];
+    // }
 
-    const oldUserDataPathExists = isRealUserDataDir(oldUserDataPath);
-    console.log(newUserDataPath + " exists: " + (newUserDataPathExists ? 'yes' : 'no'));
-    console.log(oldUserDataPath + " exists: " + (oldUserDataPathExists ? 'yes' : 'no'));
-    if (!newUserDataPathExists && oldUserDataPathExists) {
-        console.log("Using legacy user data path: " + oldUserDataPath);
-        userDataPath = oldUserDataPath;
-    } else {
+    // const oldUserDataPathExists = isRealUserDataDir(oldUserDataPath);
+    // console.log(newUserDataPath + " exists: " + (newUserDataPathExists ? 'yes' : 'no'));
+    // console.log(oldUserDataPath + " exists: " + (oldUserDataPathExists ? 'yes' : 'no'));
+    // if (!newUserDataPathExists && oldUserDataPathExists) {
+    //     console.log("Using legacy user data path: " + oldUserDataPath);
+    //     userDataPath = oldUserDataPath;
+    // } else {
         userDataPath = newUserDataPath;
-    }
+    // }
 }
 app.setPath('userData', userDataPath);
 
@@ -214,12 +214,12 @@ async function setupGlobals() {
     iconPath = path.join(resPath, "img", iconFile);
     trayConfig = {
         icon_path: iconPath,
-        brand: vectorConfig.brand || 'Element',
+        brand: vectorConfig.brand || 'SchildiChat',
     };
 
     // launcher
     launcher = new AutoLaunch({
-        name: vectorConfig.brand || 'Element',
+        name: vectorConfig.brand || 'SchildiChat',
         isHidden: true,
         mac: {
             useLaunchAgent: true,
@@ -227,24 +227,24 @@ async function setupGlobals() {
     });
 }
 
-async function moveAutoLauncher() {
-    // Look for an auto-launcher under 'Riot' and if we find one, port it's
-    // enabled/disbaledp-ness over to the new 'Element' launcher
-    if (!vectorConfig.brand || vectorConfig.brand === 'Element') {
-        const oldLauncher = new AutoLaunch({
-            name: 'Riot',
-            isHidden: true,
-            mac: {
-                useLaunchAgent: true,
-            },
-        });
-        const wasEnabled = await oldLauncher.isEnabled();
-        if (wasEnabled) {
-            await oldLauncher.disable();
-            await launcher.enable();
-        }
-    }
-}
+// async function moveAutoLauncher() {
+//     // Look for an auto-launcher under 'Riot' and if we find one, port it's
+//     // enabled/disbaledp-ness over to the new 'Element' launcher
+//     if (!vectorConfig.brand || vectorConfig.brand === 'Element') {
+//         const oldLauncher = new AutoLaunch({
+//             name: 'Riot',
+//             isHidden: true,
+//             mac: {
+//                 useLaunchAgent: true,
+//             },
+//         });
+//         const wasEnabled = await oldLauncher.isEnabled();
+//         if (wasEnabled) {
+//             await oldLauncher.disable();
+//             await launcher.enable();
+//         }
+//     }
+// }
 
 const eventStorePath = path.join(app.getPath('userData'), 'EventStore');
 const store = new Store({ name: "electron-config" });
@@ -812,7 +812,7 @@ app.enableSandbox();
 app.on('ready', async () => {
     try {
         await setupGlobals();
-        await moveAutoLauncher();
+        // await moveAutoLauncher();
     } catch (e) {
         console.log("App setup failed: exiting", e);
         process.exit(1);
