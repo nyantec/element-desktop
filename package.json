@@ -2,7 +2,7 @@
   "name": "schildichat-desktop",
   "productName": "SchildiChat",
   "main": "src/electron-main.js",
-  "version": "1.7.17-sc1",
+  "version": "1.7.18-sc1",
   "description": "A Matrix Client based on Element with a more traditional instant messaging experience",
   "author": "SchildiChat",
   "repository": {
