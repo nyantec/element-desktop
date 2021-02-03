@@ -1,3 +1,22 @@
+Changes in [1.7.19](https://github.com/vector-im/element-desktop/releases/tag/v1.7.19) (2021-02-03)
+===================================================================================================
+[Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.19-rc.1...v1.7.19)
+
+ * No changes since rc.1
+
+Changes in [1.7.19-rc.1](https://github.com/vector-im/element-desktop/releases/tag/v1.7.19-rc.1) (2021-01-29)
+=============================================================================================================
+[Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.18...v1.7.19-rc.1)
+
+ * Remove Buildkite pipeline file
+   [\#167](https://github.com/vector-im/element-desktop/pull/167)
+ * Upgrade deps 2021-01-18
+   [\#166](https://github.com/vector-im/element-desktop/pull/166)
+ * package: Bump our seshat version
+   [\#164](https://github.com/vector-im/element-desktop/pull/164)
+ * Enable context isolation, bridge expected IPC
+   [\#163](https://github.com/vector-im/element-desktop/pull/163)
+
 Changes in [1.7.18](https://github.com/vector-im/element-desktop/releases/tag/v1.7.18) (2021-01-26)
 ===================================================================================================
 [Full Changelog](https://github.com/vector-im/element-desktop/compare/v1.7.17...v1.7.18)
