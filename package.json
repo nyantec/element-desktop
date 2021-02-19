@@ -9,6 +9,7 @@
     "type": "git",
     "url": "https://github.com/SchildiChat/element-desktop"
   },
+  "homepage": "https://schildi.chat/",
   "license": "Apache-2.0",
   "files": [],
   "scripts": {
@@ -93,6 +94,11 @@
       "desktop": {
         "StartupWMClass": "schildichat"
       }
+    },
+    "deb": {
+      "depends": ["libgtk-3-0", "libnotify4", "libnss3", "libxss1", "libxtst6", "xdg-utils", "libatspi2.0-0", "libuuid1", "libsecret-1-0", "libsqlcipher0"],
+      "packageCategory": "net",
+      "priority": "extra"
     },
     "mac": {
       "category": "public.app-category.social-networking",
