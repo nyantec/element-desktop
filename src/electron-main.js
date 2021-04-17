@@ -27,7 +27,9 @@ const argv = require('minimist')(process.argv, {
     alias: {help: "h"},
 });
 
-const {app, ipcMain, powerSaveBlocker, BrowserWindow, Menu, autoUpdater, protocol} = require('electron');
+const {
+    app, ipcMain, powerSaveBlocker, BrowserWindow, Menu, autoUpdater, protocol, dialog,
+} = require('electron');
 const AutoLaunch = require('auto-launch');
 const path = require('path');
 
@@ -253,6 +255,30 @@ let eventIndex = null;
 let mainWindow = null;
 global.appQuitting = false;
 
+const exitShortcuts = [
+    (input, platform) => platform !== 'darwin' && input.alt && input.code === 'F4',
+    (input, platform) => platform !== 'darwin' && input.control && input.code === 'KeyQ',
+    (input, platform) => platform === 'darwin' && input.meta && input.code === 'KeyQ',
+];
+
+const warnBeforeExit = (event, input) => {
+    const shouldWarnBeforeExit = store.get('warnBeforeExit', true);
+    const exitShortcutPressed = exitShortcuts.some(shortcutFn => shortcutFn(input, process.platform));
+
+    if (shouldWarnBeforeExit && exitShortcutPressed) {
+        const shouldCancelCloseRequest = dialog.showMessageBoxSync(mainWindow, {
+            type: "question",
+            buttons: ["Cancel", "Close Element"],
+            message: "Are you sure you want to quit?",
+            defaultId: 1,
+            cancelId: 0,
+        }) === 0;
+
+        if (shouldCancelCloseRequest) {
+            event.preventDefault();
+        }
+    }
+};
 
 const deleteContents = async (p) => {
     for (const entry of await afs.readdir(p)) {
@@ -340,6 +366,12 @@ ipcMain.on('ipcCall', async function(ev, payload) {
                 launcher.disable();
             }
             break;
+        case 'shouldWarnBeforeExit':
+            ret = store.get('warnBeforeExit', true);
+            break;
+        case 'setWarnBeforeExit':
+            store.set('warnBeforeExit', args[0]);
+            break;
         case 'getMinimizeToTrayEnabled':
             ret = tray.hasTray();
             break;
@@ -387,17 +419,25 @@ ipcMain.on('ipcCall', async function(ev, payload) {
             break;
         case 'setSpellCheckLanguages':
             if (args[0] && args[0].length > 0) {
+                mainWindow.webContents.session.setSpellCheckerEnabled(true);
+                store.set("spellCheckerEnabled", true);
+
                 try {
                     mainWindow.webContents.session.setSpellCheckerLanguages(args[0]);
                 } catch (er) {
                     console.log("There were problems setting the spellcheck languages", er);
                 }
             } else {
-                mainWindow.webContents.session.setSpellCheckerLanguages([]);
+                mainWindow.webContents.session.setSpellCheckerEnabled(false);
+                store.set("spellCheckerEnabled", false);
             }
             break;
         case 'getSpellCheckLanguages':
-            ret = mainWindow.webContents.session.getSpellCheckerLanguages();
+            if (store.get("spellCheckerEnabled", true)) {
+                ret = mainWindow.webContents.session.getSpellCheckerLanguages();
+            } else {
+                ret = [];
+            }
             break;
         case 'getAvailableSpellCheckLanguages':
             ret = mainWindow.webContents.session.availableSpellCheckerLanguages;
@@ -897,11 +937,14 @@ app.on('ready', async () => {
             enableRemoteModule: false,
             contextIsolation: true,
             webgl: false,
-            spellcheck: true,
         },
     });
     mainWindow.loadURL('vector://vector/webapp/');
     Menu.setApplicationMenu(vectorMenu);
+
+    // Handle spellchecker
+    // For some reason spellCheckerEnabled isn't persisted so we have to use the store here
+    mainWindow.webContents.session.setSpellCheckerEnabled(store.get("spellCheckerEnabled", true));
 
     // Create trayIcon icon
     if (store.get('minimizeToTray', true)) tray.create(trayConfig);
@@ -917,10 +960,12 @@ app.on('ready', async () => {
         }
     });
 
+    mainWindow.webContents.on('before-input-event', warnBeforeExit);
+
     mainWindow.on('closed', () => {
         mainWindow = global.mainWindow = null;
     });
-    mainWindow.on('close', (e) => {
+    mainWindow.on('close', async (e) => {
         // If we are not quitting and have a tray icon then minimize to tray
         if (!global.appQuitting && (tray.hasTray() || process.platform === 'darwin')) {
             // On Mac, closing the window just hides it
