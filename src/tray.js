@@ -47,10 +47,30 @@ exports.create = function(config) {
         }
     };
 
+    const showWin = function() {
+        if (global.mainWindow.isMinimized()) global.mainWindow.restore();
+        if (!global.mainWindow.isVisible()) global.mainWindow.show();
+        global.mainWindow.focus();
+    };
+
+    const hideWin = function() {
+        global.mainWindow.hide();
+    };
+
     const contextMenu = Menu.buildFromTemplate([
+        /*
         {
             label: `Show/Hide ${config.brand}`,
             click: toggleWin,
+        },
+        */
+        {
+            label: `Show ${config.brand}`,
+            click: showWin,
+        },
+        {
+            label: `Hide ${config.brand}`,
+            click: hideWin,
         },
         { type: 'separator' },
         {
