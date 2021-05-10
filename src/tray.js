@@ -19,6 +19,7 @@ const {app, Tray, Menu, nativeImage} = require('electron');
 const pngToIco = require('png-to-ico');
 const path = require('path');
 const fs = require('fs');
+const { _t } = require('./language-helper');
 
 let trayIcon = null;
 
@@ -33,59 +34,34 @@ exports.destroy = function() {
     }
 };
 
-exports.create = function(config) {
-    // no trays on darwin
-    if (process.platform === 'darwin' || trayIcon) return;
-
-    const toggleWin = function() {
-        if (global.mainWindow.isVisible() && !global.mainWindow.isMinimized()) {
-            global.mainWindow.hide();
-        } else {
-            if (global.mainWindow.isMinimized()) global.mainWindow.restore();
-            if (!global.mainWindow.isVisible()) global.mainWindow.show();
-            global.mainWindow.focus();
-        }
-    };
-
-    const showWin = function() {
+const toggleWin = function() {
+    if (global.mainWindow.isVisible() && !global.mainWindow.isMinimized()) {
+        global.mainWindow.hide();
+    } else {
         if (global.mainWindow.isMinimized()) global.mainWindow.restore();
         if (!global.mainWindow.isVisible()) global.mainWindow.show();
         global.mainWindow.focus();
-    };
+    }
+};
 
-    const hideWin = function() {
-        global.mainWindow.hide();
-    };
+const showWin = function() {
+    if (global.mainWindow.isMinimized()) global.mainWindow.restore();
+    if (!global.mainWindow.isVisible()) global.mainWindow.show();
+    global.mainWindow.focus();
+};
 
-    const contextMenu = Menu.buildFromTemplate([
-        /*
-        {
-            label: `Show/Hide ${config.brand}`,
-            click: toggleWin,
-        },
-        */
-        {
-            label: `Show ${config.brand}`,
-            click: showWin,
-        },
-        {
-            label: `Hide ${config.brand}`,
-            click: hideWin,
-        },
-        { type: 'separator' },
-        {
-            label: 'Quit',
-            click: function() {
-                app.quit();
-            },
-        },
-    ]);
+const hideWin = function() {
+    global.mainWindow.hide();
+};
 
+exports.create = function(config) {
+    // no trays on darwin
+    if (process.platform === 'darwin' || trayIcon) return;
     const defaultIcon = nativeImage.createFromPath(config.icon_path);
 
     trayIcon = new Tray(defaultIcon);
     trayIcon.setToolTip(config.brand);
-    trayIcon.setContextMenu(contextMenu);
+    initApplicationMenu();
     trayIcon.on('click', toggleWin);
 
     let lastFavicon = null;
@@ -124,3 +100,35 @@ exports.create = function(config) {
         trayIcon.setToolTip(title);
     });
 };
+
+function initApplicationMenu() {
+    if (!trayIcon) {
+        return;
+    }
+
+    const contextMenu = Menu.buildFromTemplate([
+        // {
+        //     label: _t('Show/Hide'),
+        //     click: toggleWin,
+        // },
+        {
+            label: _t('Show'),
+            click: showWin,
+        },
+        {
+            label: _t('Hide'),
+            click: hideWin,
+        },
+        { type: 'separator' },
+        {
+            label: _t('Quit'),
+            click: function() {
+                app.quit();
+            },
+        },
+    ]);
+
+    trayIcon.setContextMenu(contextMenu);
+}
+
+exports.initApplicationMenu = initApplicationMenu;

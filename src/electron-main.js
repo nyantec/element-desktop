@@ -34,7 +34,7 @@ const AutoLaunch = require('auto-launch');
 const path = require('path');
 
 const tray = require('./tray');
-const vectorMenu = require('./vectormenu');
+const buildMenuTemplate = require('./vectormenu');
 const webContentsHandler = require('./webcontents-handler');
 const updater = require('./updater');
 const {getProfileFromDeeplink, protocolInit, recordSSOSession} = require('./protocol');
@@ -57,12 +57,12 @@ try {
     }
 }
 
+const { _t, AppLocalization } = require('./language-helper');
+
 let seshatSupported = false;
 let Seshat;
 let SeshatRecovery;
 let ReindexError;
-
-const seshatDefaultPassphrase = "DEFAULT_PASSPHRASE";
 
 try {
     const seshatModule = require('matrix-seshat');
@@ -86,6 +86,7 @@ let vectorConfig;
 let iconPath;
 let trayConfig;
 let launcher;
+let appLocalization;
 
 if (argv["help"]) {
     console.log("Options:");
@@ -268,8 +269,8 @@ const warnBeforeExit = (event, input) => {
     if (shouldWarnBeforeExit && exitShortcutPressed) {
         const shouldCancelCloseRequest = dialog.showMessageBoxSync(mainWindow, {
             type: "question",
-            buttons: ["Cancel", "Close Element"],
-            message: "Are you sure you want to quit?",
+            buttons: [_t("Cancel"), _t("Close Element")],
+            message: _t("Are you sure you want to quit?"),
             defaultId: 1,
             cancelId: 0,
         }) === 0;
@@ -365,6 +366,9 @@ ipcMain.on('ipcCall', async function(ev, payload) {
             } else {
                 launcher.disable();
             }
+            break;
+        case 'setLanguage':
+            appLocalization.setAppLocale(args[0]);
             break;
         case 'shouldWarnBeforeExit':
             ret = store.get('warnBeforeExit', true);
@@ -495,6 +499,27 @@ ipcMain.on('ipcCall', async function(ev, payload) {
     });
 });
 
+
+const seshatDefaultPassphrase = "DEFAULT_PASSPHRASE";
+async function getOrCreatePassphrase(key) {
+    if (keytar) {
+        try {
+            const storedPassphrase = await keytar.getPassword("element.io", key);
+            if (storedPassphrase !== null) {
+                return storedPassphrase;
+            } else {
+                const newPassphrase = await randomArray(32);
+                await keytar.setPassword("element.io", key, newPassphrase);
+                return newPassphrase;
+            }
+        } catch (e) {
+            console.log("Error getting the event index passphrase out of the secret store", e);
+        }
+    } else {
+        return seshatDefaultPassphrase;
+    }
+}
+
 ipcMain.on('seshat', async function(ev, payload) {
     if (!mainWindow) return;
 
@@ -523,82 +548,38 @@ ipcMain.on('seshat', async function(ev, payload) {
                 const deviceId = args[1];
                 const passphraseKey = `seshat|${userId}|${deviceId}`;
 
-                let changePassphrase = false;
-                let passphrase = seshatDefaultPassphrase;
-
-                if (keytar) {
-                    try {
-                        // Try to get a passphrase for seshat.
-                        const storedPassphrase = await keytar.getPassword("element.io", passphraseKey);
-
-                        // If no passphrase was found mark that we should change
-                        // it, if one is found, use that one.
-                        if (storedPassphrase === null) {
-                            changePassphrase = true;
-                        } else {
-                            passphrase = storedPassphrase;
-                        }
-                    } catch (e) {
-                        console.log("Error getting the event index passphrase out of the secret store", e);
-                    }
-                }
-
-                const openSeshat = async () => {
-                    try {
-                        await afs.mkdir(eventStorePath, {recursive: true});
-                        return new Seshat(eventStorePath, {passphrase});
-                    } catch (e) {
-                        if (e instanceof ReindexError) {
-                            // If this is a reindex error, the index schema
-                            // changed. Try to open the database in recovery mode,
-                            // reindex the database and finally try to open the
-                            // database again.
-                            const recoveryIndex = new SeshatRecovery(eventStorePath, {
-                                passphrase,
-                            });
-
-                            const userVersion = await recoveryIndex.getUserVersion();
-
-                            // If our user version is 0 we'll delete the db
-                            // anyways so reindexing it is a waste of time.
-                            if (userVersion === 0) {
-                                await recoveryIndex.shutdown();
-
-                                try {
-                                    await deleteContents(eventStorePath);
-                                } catch (e) {
-                                }
-                            } else {
-                                await recoveryIndex.reindex();
-                            }
-
-                            return new Seshat(eventStorePath, {passphrase});
-                        } else {
-                            throw (e);
-                        }
-                    }
-                };
+                const passphrase = await getOrCreatePassphrase(passphraseKey);
 
                 try {
-                    eventIndex = await openSeshat();
+                    await afs.mkdir(eventStorePath, {recursive: true});
+                    eventIndex = new Seshat(eventStorePath, {passphrase});
                 } catch (e) {
-                    sendError(payload.id, e);
-                    return;
-                }
+                    if (e instanceof ReindexError) {
+                        // If this is a reindex error, the index schema
+                        // changed. Try to open the database in recovery mode,
+                        // reindex the database and finally try to open the
+                        // database again.
+                        const recoveryIndex = new SeshatRecovery(eventStorePath, {
+                            passphrase,
+                        });
 
-                if (changePassphrase) {
-                    try {
-                        // Generate a new random passphrase.
-                        const newPassphrase = await randomArray(32);
-                        await keytar.setPassword("element.io", passphraseKey, newPassphrase);
+                        const userVersion = await recoveryIndex.getUserVersion();
 
-                        // Set the new passphrase, this will close the event
-                        // index.
-                        await eventIndex.changePassphrase(newPassphrase);
+                        // If our user version is 0 we'll delete the db
+                        // anyways so reindexing it is a waste of time.
+                        if (userVersion === 0) {
+                            await recoveryIndex.shutdown();
 
-                        // Re-open the event index with the new passphrase.
-                        eventIndex = new Seshat(eventStorePath, {newPassphrase});
-                    } catch (e) {
+                            try {
+                                await deleteContents(eventStorePath);
+                            } catch (e) {
+                            }
+                        } else {
+                            await recoveryIndex.reindex();
+                        }
+
+                        eventIndex = new Seshat(eventStorePath, {passphrase});
+                    } else {
                         sendError(payload.id, e);
                         return;
                     }
@@ -822,6 +803,9 @@ protocol.registerSchemesAsPrivileged([{
 // transition into the user's browser.
 app.enableSandbox();
 
+// We disable media controls here. We do this because calls use audio and video elements and they sometimes capture the media keys. See https://github.com/vector-im/element-web/issues/15704
+app.commandLine.appendSwitch('disable-features', 'HardwareMediaKeyHandling,MediaSessionService');
+
 app.on('ready', async () => {
     try {
         await setupGlobals();
@@ -940,7 +924,6 @@ app.on('ready', async () => {
         },
     });
     mainWindow.loadURL('vector://vector/webapp/');
-    Menu.setApplicationMenu(vectorMenu);
 
     // Handle spellchecker
     // For some reason spellCheckerEnabled isn't persisted so we have to use the store here
@@ -989,6 +972,14 @@ app.on('ready', async () => {
     }
 
     webContentsHandler(mainWindow.webContents);
+
+    appLocalization = new AppLocalization({
+        store,
+        components: [
+            () => tray.initApplicationMenu(),
+            () => Menu.setApplicationMenu(buildMenuTemplate()),
+        ],
+    });
 });
 
 app.on('window-all-closed', () => {
