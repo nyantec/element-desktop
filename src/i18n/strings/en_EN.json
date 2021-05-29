@@ -1,6 +1,6 @@
 {
     "Cancel": "Cancel",
-    "Close Element": "Close Element",
+    "Close Element": "Close SchildiChat",
     "Are you sure you want to quit?": "Are you sure you want to quit?",
     "Show/Hide": "Show/Hide",
     "Quit": "Quit",
@@ -24,7 +24,7 @@
     "Minimize": "Minimize",
     "Close": "Close",
     "Help": "Help",
-    "Element Help": "Element Help",
+    "Element Help": "SchildiChat Help",
     "About": "About",
     "Services": "Services",
     "Hide": "Hide",
@@ -42,5 +42,6 @@
     "Save image as...": "Save image as...",
     "Failed to save image": "Failed to save image",
     "The image failed to save": "The image failed to save",
-    "Add to dictionary": "Add to dictionary"
+    "Add to dictionary": "Add to dictionary",
+    "Show": "Show"
 }

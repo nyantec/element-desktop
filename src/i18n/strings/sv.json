@@ -12,7 +12,7 @@
     "Hide": "Göm",
     "Services": "Tjänster",
     "About": "Om",
-    "Element Help": "Element Hjälp",
+    "Element Help": "SchildiChat Hjälp",
     "Help": "Hjälp",
     "Close": "Stäng",
     "Minimize": "Minimera",
@@ -37,5 +37,5 @@
     "Unhide": "Göm inte",
     "Zoom Out": "Zooma ut",
     "Zoom In": "Zooma in",
-    "Close Element": "Stäng Element"
+    "Close Element": "Stäng SchildiChat"
 }
