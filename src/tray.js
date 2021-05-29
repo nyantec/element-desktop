@@ -112,7 +112,7 @@ function initApplicationMenu() {
         //     click: toggleWin,
         // },
         {
-            label: _t('Unhide'),
+            label: _t('Show'),
             click: showWin,
         },
         {
