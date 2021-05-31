@@ -1,3 +1,5 @@
+# Warning: This information is only partially applicable to SchildiChat, look here instead: https://github.com/SchildiChat/schildichat-desktop
+
 Element Desktop
 ===============
 
@@ -151,15 +153,13 @@ the above created by a pre-1.7 install, in which case it will be `Riot` or
 Translations
 ==========================
 
-To add a new translation, head to the [translating doc](https://github.com/vector-im/element-web/blob/develop/docs/translating.md).
+To add a new translation, head to the [translating doc](https://github.com/SchildiChat/element-web/blob/develop/docs/translating.md).
 
-For a developer guide, see the [translating dev doc](https://github.com/vector-im/element-web/blob/develop/docs/translating-dev.md).
-
-[<img src="https://translate.element.io/widgets/element-desktop/-/multi-auto.svg" alt="translationsstatus" width="340">](https://translate.element.io/engage/element-desktop/?utm_source=widget)
+For a developer guide, see the [translating dev doc](https://github.com/SchildiChat/element-web/blob/develop/docs/translating-dev.md).
 
 Report bugs & give feedback
 ==========================
 
 If you run into any bugs or have feedback you'd like to share, please let us know on GitHub.
 
-To help avoid duplicate issues, please [view existing issues](https://github.com/vector-im/element-web/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc) first (and add a +1) or [create a new issue](https://github.com/vector-im/element-web/issues/new/choose) if you can't find it.  Please note that this issue tracker is associated with the [element-web](https://github.com/vector-im/element-web) repo, but is also applied to the code in this repo as well.
+To help avoid duplicate issues, please [view existing issues](https://github.com/SchildiChat/schildichat-desktop/issues?q=is%3Aopen+is%3Aissue+sort%3Areactions-%2B1-desc) first (and add a +1) or [create a new issue](https://github.com/SchildiChat/schildichat-desktop/issues/new/choose) if you can't find it.
