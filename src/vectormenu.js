@@ -17,6 +17,8 @@ limitations under the License.
 const { app, shell, Menu } = require('electron');
 const { _t } = require('./language-helper');
 
+const isMac = process.platform === 'darwin';
+
 function buildMenuTemplate() {
     // Menu template from http://electron.atom.io/docs/api/menu/, edited
     const template = [
@@ -70,7 +72,6 @@ function buildMenuTemplate() {
                 },
                 {
                     role: 'zoomin',
-                    accelerator: 'CommandOrControl+=',
                     label: _t('Zoom In'),
                 },
                 {
@@ -78,11 +79,11 @@ function buildMenuTemplate() {
                     label: _t('Zoom Out'),
                 },
                 { type: 'separator' },
-                {
+                // in macOS the Preferences menu item goes in the first menu
+                ...(!isMac ? [{
                     label: _t('Preferences'),
-                    accelerator: 'Command+,', // Mac-only accelerator
                     click() { global.mainWindow.webContents.send('preferences'); },
-                },
+                }] : []),
                 {
                     role: 'togglefullscreen',
                     label: _t('Toggle Full Screen'),
@@ -122,7 +123,7 @@ function buildMenuTemplate() {
     ];
 
     // macOS has specific menu conventions...
-    if (process.platform === 'darwin') {
+    if (isMac) {
         template.unshift({
             // first macOS menu is the name of the app
             role: 'appMenu',
@@ -130,7 +131,13 @@ function buildMenuTemplate() {
             submenu: [
                 {
                     role: 'about',
-                    label: _t('About'),
+                    label: _t('About') + ' ' + app.name,
+                },
+                { type: 'separator' },
+                {
+                    label: _t('Preferences') + '…',
+                    accelerator: 'Command+,', // Mac-only accelerator
+                    click() { global.mainWindow.webContents.send('preferences'); },
                 },
                 { type: 'separator' },
                 {

@@ -2,7 +2,7 @@
   "name": "schildichat-desktop",
   "productName": "SchildiChat",
   "main": "src/electron-main.js",
-  "version": "1.7.30-sc1",
+  "version": "1.7.31-sc1",
   "description": "A Matrix Client based on Element with a more traditional instant messaging experience",
   "author": "SchildiChat",
   "repository": {
@@ -52,8 +52,8 @@
   },
   "devDependencies": {
     "asar": "^2.0.1",
-    "electron-builder": "22.10.5",
-    "electron-builder-squirrel-windows": "22.10.5",
+    "electron-builder": "22.11.4",
+    "electron-builder-squirrel-windows": "22.11.4",
     "electron-devtools-installer": "^3.1.1",
     "electron-notarize": "^1.0.0",
     "eslint": "7.18.0",
@@ -77,7 +77,7 @@
   },
   "build": {
     "appId": "chat.schildi.desktop",
-    "electronVersion": "12.0.9",
+    "electronVersion": "12.0.11",
     "files": [
       "package.json",
       {
