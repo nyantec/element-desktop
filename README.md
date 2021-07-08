@@ -1,5 +1,12 @@
 # Warning: This information is only partially applicable to SchildiChat, look here instead: https://github.com/SchildiChat/schildichat-desktop
 
+<pre><code><a href="https://github.com/SchildiChat/schildichat-desktop">schildichat-desktop</a> (recommended starting point to build SchildiChat for Web <b>and</b> Desktop)
+|-- <b>element-desktop</b> <i>&lt;-- this repo</i> (electron wrapper)
+|-- <a href="https://github.com/SchildiChat/element-web">element-web</a> ("skin" for matrix-react-sdk)
+|-- <a href="https://github.com/SchildiChat/matrix-react-sdk">matrix-react-sdk</a> (most of the development happens here)
+`-- <a href="https://github.com/SchildiChat/matrix-js-sdk">matrix-js-sdk</a> (Matrix client js sdk)
+</code></pre>
+
 Element Desktop
 ===============
 
