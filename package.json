@@ -2,7 +2,7 @@
   "name": "schildichat-desktop",
   "productName": "SchildiChat",
   "main": "lib/electron-main.js",
-  "version": "1.7.32-sc1",
+  "version": "1.7.33-sc1",
   "description": "A Matrix Client based on Element with a more traditional instant messaging experience",
   "author": "SchildiChat",
   "repository": {
@@ -24,8 +24,10 @@
     "lint:js": "eslint src/ scripts/ hak/",
     "lint:types": "tsc --noEmit",
     "build:native": "yarn run hak",
-    "build32": "yarn run build:ts && yarn run build:res && electron-builder --ia32",
-    "build64": "yarn run build:ts && yarn run build:res && electron-builder --x64",
+    "build:native:universal": "yarn run hak --target x86_64-apple-darwin fetchandbuild && yarn run hak --target aarch64-apple-darwin fetchandbuild && yarn run hak --target x86_64-apple-darwin --target aarch64-apple-darwin copyandlink",
+    "build:32": "yarn run build:ts && yarn run build:res && electron-builder --ia32",
+    "build:64": "yarn run build:ts && yarn run build:res && electron-builder --x64",
+    "build:universal": "yarn run build:ts && yarn run build:res && electron-builder --universal",
     "build": "yarn run build:ts && yarn run build:res && electron-builder",
     "build:ts": "tsc",
     "build:res": "node scripts/copy-res.js",
@@ -81,7 +83,7 @@
   },
   "build": {
     "appId": "chat.schildi.desktop",
-    "electronVersion": "12.0.12",
+    "electronVersion": "12.0.14",
     "files": [
       "package.json",
       {

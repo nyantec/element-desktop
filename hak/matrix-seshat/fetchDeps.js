@@ -34,7 +34,7 @@ module.exports = async function(hakEnv, moduleInfo) {
 
 async function getSqlCipher(hakEnv, moduleInfo) {
     const version = moduleInfo.cfg.dependencies.sqlcipher;
-    const sqlCipherDir = path.join(moduleInfo.moduleDotHakDir, `sqlcipher-${version}`);
+    const sqlCipherDir = path.join(moduleInfo.moduleTargetDotHakDir, `sqlcipher-${version}`);
 
     let haveSqlcipher;
     try {
@@ -62,9 +62,10 @@ async function getSqlCipher(hakEnv, moduleInfo) {
         await bob;
     }
 
+    // Extract the tarball to per-target directories, then we avoid cross-contaiminating archs
     await tar.x({
         file: sqlCipherTarball,
-        cwd: moduleInfo.moduleDotHakDir,
+        cwd: moduleInfo.moduleTargetDotHakDir,
     });
 
     if (hakEnv.isWin()) {
@@ -94,7 +95,7 @@ async function getSqlCipher(hakEnv, moduleInfo) {
 
 async function getOpenSsl(hakEnv, moduleInfo) {
     const version = moduleInfo.cfg.dependencies.openssl;
-    const openSslDir = path.join(moduleInfo.moduleDotHakDir, `openssl-${version}`);
+    const openSslDir = path.join(moduleInfo.moduleTargetDotHakDir, `openssl-${version}`);
 
     let haveOpenSsl;
     try {
@@ -121,9 +122,9 @@ async function getOpenSsl(hakEnv, moduleInfo) {
         });
     }
 
-    console.log("extracting " + openSslTarball + " in " + moduleInfo.moduleDotHakDir);
+    console.log("extracting " + openSslTarball + " in " + moduleInfo.moduleTargetDotHakDir);
     await tar.x({
         file: openSslTarball,
-        cwd: moduleInfo.moduleDotHakDir,
+        cwd: moduleInfo.moduleTargetDotHakDir,
     });
 }
