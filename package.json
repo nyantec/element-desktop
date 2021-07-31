@@ -117,7 +117,8 @@
       "extendInfo": {
         "NSUserActivityTypes": [
           "org.matrix.room"
-        ]
+        ],
+        "ITSAppUsesNonExemptEncryption": true
       },
       "darkModeSupport": true,
       "hardenedRuntime": true,
