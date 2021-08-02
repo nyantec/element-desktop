@@ -7,8 +7,9 @@ if [ $? != 0 ]; then
 fi
 
 # Taken from https://www.electron.build/multi-platform-build#docker
+# Pass through any vars prefixed with INDOCKER_, removing the prefix
 docker run --rm -ti \
- --env-file <(env | grep -iE '^BUILDKITE_API_KEY=') \
+ --env-file <(env | grep -E '^INDOCKER_' | sed -e 's/^INDOCKER_//') \
  --env ELECTRON_CACHE="/root/.cache/electron" \
  --env ELECTRON_BUILDER_CACHE="/root/.cache/electron-builder" \
  -v ${PWD}:/project \
