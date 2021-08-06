@@ -130,6 +130,9 @@
         ".hak/hakModules/matrix-seshat/native/index.node"
       ]
     },
+    "dmg": {
+      "icon": "build/dmg.icns"
+    },
     "mas": {
       "entitlements": "build/entitlements.mas.plist",
       "entitlementsInherit": "build/entitlements.mas.inherit.plist",
