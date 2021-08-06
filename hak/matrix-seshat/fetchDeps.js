@@ -55,7 +55,12 @@ async function getSqlCipher(hakEnv, moduleInfo) {
         haveSqlcipherTar = false;
     }
     if (!haveSqlcipherTar) {
-        const bob = needle('get', `https://github.com/sqlcipher/sqlcipher/archive/v${version}.tar.gz`, {
+        /*const bob = needle('get', `https://github.com/sqlcipher/sqlcipher/archive/v${version}.tar.gz`, {
+            follow: 10,
+            output: sqlCipherTarball,
+        });*/
+        // FIXME: revert
+        const bob = needle('get', 'https://github.com/SchildiChat/sqlcipher/archive/refs/heads/m1.tar.gz', {
             follow: 10,
             output: sqlCipherTarball,
         });
