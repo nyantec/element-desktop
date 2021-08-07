@@ -43,6 +43,7 @@
   "dependencies": {
     "auto-launch": "^5.0.5",
     "counterpart": "^0.18.6",
+    "electron-osx-sign": "^0.5.0",
     "electron-store": "^6.0.1",
     "electron-window-state": "^5.0.3",
     "minimist": "^1.2.3",
@@ -117,9 +118,27 @@
       "extendInfo": {
         "NSUserActivityTypes": [
           "org.matrix.room"
-        ]
+        ],
+        "ITSAppUsesNonExemptEncryption": true
       },
-      "darkModeSupport": true
+      "darkModeSupport": true,
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.inherit.plist",
+      "asarUnpack": [
+        ".hak/hakModules/keytar/build/Release/keytar.node",
+        ".hak/hakModules/matrix-seshat/native/index.node"
+      ]
+    },
+    "dmg": {
+      "icon": "build/dmg.icns"
+    },
+    "mas": {
+      "entitlements": "build/entitlements.mas.plist",
+      "entitlementsInherit": "build/entitlements.mas.inherit.plist",
+      "entitlementsLoginHelper": "build/entitlements.mas.loginhelper.plist",
+      "provisioningProfile": "build/schildi_dev.provisionprofile",
+      "hardenedRuntime": true
     },
     "win": {
       "target": {
