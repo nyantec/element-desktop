@@ -19,7 +19,7 @@ limitations under the License.
 
 // Squirrel on windows starts the app with various flags as hooks to tell us when we've been installed/uninstalled etc.
 import "./squirrelhooks";
-import { app, ipcMain, powerSaveBlocker, BrowserWindow, Menu, autoUpdater, protocol, dialog } from "electron";
+import { app, ipcMain, powerSaveBlocker, BrowserWindow, Menu, autoUpdater, protocol, dialog, nativeTheme } from "electron";
 import AutoLaunch from "auto-launch";
 import path from "path";
 import windowStateKeeper from 'electron-window-state';
@@ -847,6 +847,14 @@ app.on('ready', async () => {
         }
     }
 
+    if (argv['system-theme-dark-override']) {
+        nativeTheme.themeSource = 'dark';
+    } else if (argv['system-theme-light-override']) {
+        nativeTheme.themeSource = 'light';
+    } else if (argv['system-theme-no-override']) {
+        nativeTheme.themeSource = 'system';
+    }
+
     protocol.registerFileProtocol('vector', (request, callback) => {
         if (request.method !== 'GET') {
             callback({ error: -322 }); // METHOD_NOT_SUPPORTED from chromium/src/net/base/net_error_list.h
@@ -1022,6 +1030,14 @@ app.on('before-quit', beforeQuit);
 autoUpdater.on('before-quit-for-update', beforeQuit);
 
 app.on('second-instance', (ev, commandLine, workingDirectory) => {
+    if (commandLine.includes('--system-theme-dark-override')) {
+        nativeTheme.themeSource = 'dark';
+    } else if (commandLine.includes('--system-theme-light-override')) {
+        nativeTheme.themeSource = 'light';
+    } else if (commandLine.includes('--system-theme-no-override')) {
+        nativeTheme.themeSource = 'system';
+    }
+
     // If other instance launched with --hidden then skip showing window
     if (commandLine.includes('--hidden')) return;
 
