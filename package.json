@@ -1,10 +1,10 @@
 {
   "name": "schildichat-desktop",
-  "productName": "SchildiChat",
+  "productName": "nyantec Chat",
   "main": "lib/electron-main.js",
   "version": "1.8.2-sc1",
   "description": "A Matrix Client based on Element with a more traditional instant messaging experience",
-  "author": "SchildiChat",
+  "author": "nyantec GmbH",
   "repository": {
     "type": "git",
     "url": "https://github.com/SchildiChat/element-desktop"
@@ -84,8 +84,8 @@
     "keytar": "^5.6.0"
   },
   "build": {
-    "appId": "chat.schildi.desktop",
     "electronVersion": "13.1.9",
+    "appId": "com.nyantec.chat",
     "files": [
       "package.json",
       {
